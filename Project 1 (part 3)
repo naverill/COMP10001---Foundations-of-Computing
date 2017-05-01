@@ -1,0 +1,57 @@
+#
+#   together:
+#      two trajectories, each as a list of (x,y,t) tuples
+#      distance threshold for two points being "close"
+#   returns: maximum number of consecutive points where trajectories are close
+#
+
+def together(t1, t2, delta):
+
+    # find first time in common between trajectories
+    startTime = max(t1[0][2], t2[0][2])
+
+    # find last time in common between trajectories
+    endTime = min(t1[-1][2], t2[-1][2])
+
+    # if trajectories do not overlap in time
+    if startTime > endTime:
+        return 0
+
+    # synchronise start point in each trajectory
+    while t1[0][2] < startTime:
+        t1 = t1[1:]
+
+    while t2[0][2] < startTime:
+        t2 = t2[1:]
+
+    # duration so far of current overlap
+    duration = 0
+    # maximum duration any overlap so far
+    maxDuration = 0
+
+    # for each point in trajectory
+    for t in range(startTime, endTime+1):
+
+        # if trajectories are close at time t
+        if dist(t1[0][:2], t2[0][:2]) < delta:
+            duration += 1
+            if duration > maxDuration:
+                maxDuration = duration
+        else:
+            duration = 0
+
+        # move on to next point in each trajectory
+        t1 = t1[1:]
+        t2 = t2[1:]
+
+    return maxDuration
+
+#
+#   dist:
+#      two 2D points, each as a (x,y) tuple
+#   returns: Euclidean distance between given pair of points
+#
+
+def dist(p1, p2):
+    
+    return ((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)**0.5
