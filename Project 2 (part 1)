@@ -1,0 +1,30 @@
+"""Nina Averill
+Student number: 835744"""
+
+
+"""function similarity takes inputs of index value of two people p1 and p2, and 
+tuples of restaurant ratings, and calculates the similarity of their respective 
+restaurant ratings"""
+from math import sqrt
+def similarity(p1, p2, ratings):
+    dot_prod = 0 
+    mag_p1 = 0 #initialises the value of the magnitude of of p1
+    mag_p2 = 0 #initialises the value of the magntude p2  
+    try:
+        for i in range(0, len(ratings[p1])):
+            a = ratings[p1][i]*ratings[p2][i] 
+            b = ratings[p1][i]**2
+            c = ratings[p2][i]**2
+            if a:
+                dot_prod += a
+                mag_p1 += b 
+                mag_p2 += c
+                """for loop calculates values of individual components in cosine
+                similarity, but only adds it to total if the rating by p1 and p2
+                are non-zero"""
+        return dot_prod/(sqrt(mag_p1)*sqrt(mag_p2))
+    except ZeroDivisionError:
+        return 0
+        """if p1 and p2 have no rated restaurants in common, the function avoids
+        the occurance of a zero-dividion error through an exception handler and 
+        returns 0""" 
