@@ -1,0 +1,31 @@
+"""Nina Averill
+Student number: 835744"""
+
+def visits(tr, b):
+    """function counts number of time object enters specified region"""
+    count = 0 
+    in_region = False #assumes object starts outside region
+    for i in range(0,len(tr)):
+        x = tr[i][0]
+        y = tr[i][1]
+        x1 = b[0][0]
+        x2 = b[1][0]
+        y1 = b[0][1]
+        y2 = b[1][1]
+        
+        """Case 1: If x and y coordiates both fall within region, and the object 
+        was outside the region in the previous iteration, function adds one to 
+         the count"""
+        """Case 2: If coordiates both fall within region, and the object was 
+         inside the region in the previous iteration, function does not 
+         add to count as object has not entered the region"""
+        """Case 3: If coordinates don't lie within region, function registers 
+        object as being outside region"""
+        if x1<=x<=x2 and y1<=y<=y2 and not in_region:
+            in_region = True 
+            count += 1
+        elif x1<=x<=x2 and y1<=y<=y2 and in_region:
+            in_region = True
+        elif not x1<=x<=x2 or not y1<=y<=y2:
+            in_region = False
+    return count
