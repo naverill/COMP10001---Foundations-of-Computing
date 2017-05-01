@@ -1,0 +1,33 @@
+"""Nina Averill
+Student number: 835744"""
+
+from math import sqrt 
+def closestTime(tr, pt):
+    """function closestTime takes inputs of a tuple, containing the coordinates 
+    of an obect at time t, calcuates its distance from point pt, and returns 
+    the time at which the object is closest to the point"""
+    
+    """calculates each coordinate's distance from point, adds it to d_list 
+    and calculates min value"""
+    d_list=[]     #creates list of distances calculated for each coordinate 
+    if len(tr)>1:
+        for i in range(0,len(tr)):
+            x = tr[i][0]
+            x1 = pt[0]
+            y = tr[i][1]
+            y1 = pt[1]
+            t = tr[i][2]
+            d = sqrt(((x-x1)**2+(y-y1)**2))
+            d_list.append(d)
+            """calculates Euclidean distance between coordinate and pt, then 
+            appends it to d_list"""
+            min_d = min(d_list)
+            if d_list[i] > min_d:
+                return tr[i-1][2]
+            """if the distance calculated at time t is greater than 
+            the distance at time t-1 the function assumes object is 
+            moving away from the point and returns min value at t-1""" 
+    else:
+        return tr[0][2]
+        """if tr contains only one coordinate, function returns time at that 
+        point"""  
