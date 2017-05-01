@@ -1,0 +1,23 @@
+"""Nina Averill
+Student number: 835744"""
+
+def simple_interpreter(code):
+    """function simple_interpreter takes inputs of a list of instuctions and 
+    returns a tuple of the position of a robot after the sequence of 
+    instructions is applied"""
+    #initialises initial position of robot
+    #action_dict assigns each action with its effect on the position of the robot
+    position_dict = {'x':0, 'y':0, 'direction': 'N'}
+    action_dict = {'turn': {'N':'E', 'E':'S', 'S':'W', 'W':'N'}, 'move': {'N': \
+                         ['y',1], 'E': ['x',1], 'S': ['y', -1], 'W': ['x',-1]}}
+    for i in code:
+        #assigns position in position_dict with new value from action_dict
+        if i=='move':
+            #replaces value of x,y coordinate
+            position_dict[action_dict['move'][position_dict['direction']][0]]\
+                += action_dict['move'][position_dict['direction']][1]
+        elif i=='turn':
+            #replaces direction
+            position_dict['direction']=action_dict['turn']\
+            [position_dict['direction']]
+    return (position_dict['x'], position_dict['y'], position_dict['direction'])
