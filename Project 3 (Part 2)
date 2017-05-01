@@ -28,5 +28,3 @@ def macro_interpreter(code, macros):
             position_dict['direction']=action_dict['turn'][position_dict\
                                                              ['direction']]
     return (position_dict['x'], position_dict['y'], position_dict['direction'])
-
-
