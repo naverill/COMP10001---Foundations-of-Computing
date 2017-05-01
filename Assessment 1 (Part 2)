@@ -1,0 +1,32 @@
+"""Nina Averill
+Student number: 835744"""
+
+"""function macro_interpreter takes inputs of a list of instuctions and a 
+dictionary of macros and returns a tuple of the position of a robot after the 
+sequence of instructions is applied"""
+def macro_interpreter(code, macros):
+    #initialises initial position of robot
+    #action_dict assigns each action with its effect on the position of the robot
+    position_dict = {'x':0, 'y':0, 'direction': 'N'}
+    action_dict = {'turn': {'N':'E', 'E':'S', 'S':'W', 'W':'N'}, 'move': {'N': \
+                          ['y',1], 'E': ['x',1], 'S': ['y', -1], 'W': ['x',-1]}}
+    #if any macro exists in code, function will continue to iterate 
+    #continues until  all are replaced with simple actions
+    while any(t in macros for t in code):
+        for i in range(len(code)):
+            if code[i] in macros:
+                #if macro found, it is replaced in code by its sequence defined in dictionary macros
+                code = code[:i] + macros[code[i]] + code[i+1:] 
+    for action in code:
+        #assigns position in position_dict with new value from action_dict
+        if action=='move':
+            #replaces value of x,y coordinate
+            position_dict[action_dict[action][position_dict['direction']][0]]\
+                    += action_dict[action][position_dict['direction']][1]
+        elif action=='turn':
+            #replaces direction
+            position_dict['direction']=action_dict['turn'][position_dict\
+                                                             ['direction']]
+    return (position_dict['x'], position_dict['y'], position_dict['direction'])
+
+
