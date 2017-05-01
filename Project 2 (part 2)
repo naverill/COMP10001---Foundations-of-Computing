@@ -1,0 +1,24 @@
+"""Nina Averill
+Student number: 835744"""
+
+
+"""function ave_rating takes inputs of a string cuisine, a tuple of restaurants,
+and a tuple of restraurants rating, and returns the average rating of 
+restaurants of the specified cuisine"""
+def ave_rating(cuisine, restaurants, ratings):
+    rating_sum = 0 
+    num = 0
+    try:
+        for i in range(0, len(restaurants)):
+            if restaurants[i][1]==cuisine:
+                for j in range(0, len(ratings)):
+                    rating = ratings[j][i]
+                    if rating: #only adds to average if rating is non-zero
+                        rating_sum+=rating 
+                        num+=1
+                """if a restaurant that serves the specified cuisine is 
+                identified in the first for loop, a second for loop calculates 
+                the average value of all non-zero ratings by customers"""
+        return float(rating_sum/num)
+    except ZeroDivisionError:
+        return 0
