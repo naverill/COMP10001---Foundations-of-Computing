@@ -1,0 +1,38 @@
+"""Nina Averill
+Student number: 835744"""
+
+"""function repeat_interpreter takes inputs of a list of instuctions, translates 
+repeats into simple instructions and returns a tuple of the position of a robot 
+after the sequence of instructions is applied"""
+def repeat_interpreter(code):
+    #initialises initial position of robot
+    #action_dict assigns each action with its effect on the position of the robot
+    position_dict = {'x':0, 'y':0, 'direction': 'N'}
+    action_dict = {'turn': {'N':'E', 'E':'S', 'S':'W', 'W':'N'}, 'move': {'N': \
+                        ['y',1], 'E': ['x',1], 'S': ['y', -1], 'W': ['x',-1]}}
+    #continues to iterate while repeat statement are not fully translated
+    while 'repeat' in code:
+        #iterates backwards through code to find innermost 'repeat' statement
+        for i in range(len(code)-1,-1,-1):
+            if code[i] =='repeat':
+                #once found, iterates forward until associated 'end' statement found
+                for j in range(i+1, len(code)):
+                    if code[j] == "end":
+                        action = code[i:j]
+                        #repeat statement replaced with simple action repeated by no. of times specified 
+                        code = code[:i] + action[1:j]*action[1] + code[j:-1]
+    for i in range(len(code)):
+        #assigns position in position_dict with new value from action_dict
+        if code[i]=='move':
+            #replaces value of x,y coordinate
+            position_dict[action_dict[code[i]][position_dict['direction']][0]]\
+                   += action_dict[code[i]][position_dict['direction']][1]
+        elif code[i]=='turn':
+            #replaces direction
+            position_dict['direction']=action_dict['turn']\
+                [position_dict['direction']]
+    return (position_dict['x'], position_dict['y'], position_dict['direction'])
+
+
+
+
